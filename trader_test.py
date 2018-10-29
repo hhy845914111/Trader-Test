@@ -1,5 +1,6 @@
 from random import randint, choice
 from time import time
+from num2words import num2words
 
 
 class OperationType(object):
@@ -36,32 +37,32 @@ class OperationType(object):
 
 class Plus(OperationType):
 
-    MAX = 999999
+    MAX = 99999
 
     def __init__(self):
         OperationType.__init__(self, "Plus")
 
     def get_one(self):
-        a = randint(0, Plus.MAX) / 1000
-        b = randint(0, Plus.MAX) / 1000
+        a = randint(0, Plus.MAX) / 100
+        b = randint(0, Plus.MAX) / 100
 
         self.timer()
-        return str(a) + " + " + str(b), a + b
+        return num2words(a) + " + " + num2words(b), a + b
 
 
 class Minus(OperationType):
 
-    MAX = 999999
+    MAX = 99999
 
     def __init__(self):
         OperationType.__init__(self, "Minus")
 
     def get_one(self):
-        a = randint(0, Minus.MAX) / 1000
-        b = randint(0, Minus.MAX) / 1000
+        a = randint(0, Minus.MAX) / 100
+        b = randint(0, Minus.MAX) / 100
 
         self.timer()
-        return str(a) + " - " + str(b), a - b
+        return num2words(a) + " - " + num2words(b), a - b
 
 
 class Multiply1(OperationType):
@@ -85,7 +86,7 @@ class Multiply1(OperationType):
         self._b = b
 
         self.timer()
-        return str(a) + " * " + str(b), a * b
+        return num2words(a) + " * " + num2words(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -115,7 +116,7 @@ class Multiply2(OperationType):
         self._b = b
 
         self.timer()
-        return str(a) + " * " + str(b), a * b
+        return num2words(a) + " * " + num2words(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -136,7 +137,7 @@ class Divide(OperationType):
         b = randint(0, Divide.MAX)
 
         self.timer()
-        return str(a * b) + " / " + str(b), a
+        return num2words(a * b) + " / " + num2words(b), a
 
 
 class Square(OperationType):
@@ -168,6 +169,7 @@ class Generator(object):
 
             if tt == "p":
                 right = False
+                print(answer)
                 break
 
             if tt == "h":
