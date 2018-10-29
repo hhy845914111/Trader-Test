@@ -4,7 +4,7 @@ from time import time
 
 class OperationType(object):
 
-    _time = 0.0
+    time_save = 0.0
 
     def __init__(self, typename):
         self.right_count = 0
@@ -25,9 +25,10 @@ class OperationType(object):
 
     @staticmethod
     def timer():
-        tt = time() - OperationType._time
-        OperationType._time = tt
-        return tt
+        tt = time()
+        dt = tt - OperationType.time_save
+        OperationType.time_save = tt
+        return dt
 
     def helper(self):
         pass
@@ -63,7 +64,7 @@ class Minus(OperationType):
         return str(a) + " - " + str(b), a - b
 
 
-class Multiply(OperationType):
+class Multiply1(OperationType):
 
     MAX = 999
 
@@ -73,12 +74,42 @@ class Multiply(OperationType):
         self._b = 0
 
     def get_one(self):
-        a = randint(0, Multiply.MAX)
-        b = randint(0, Multiply.MAX)
+        a = randint(0, self.MAX)
+        b = randint(0, self.MAX)
 
         while a > 99 and b > 99:
-            a = randint(0, Multiply.MAX)
-            b = randint(0, Multiply.MAX)
+            a = randint(0, self.MAX)
+            b = randint(0, self.MAX)
+
+        self._a = a
+        self._b = b
+
+        self.timer()
+        return str(a) + " * " + str(b), a * b
+
+    def helper(self):
+        if self._a <= 99:
+            print(self._a // 10 * self._b * 10, self._b * (self._a % 10))
+        else:
+            print(self._b // 10 * self._a * 10, self._a * (self._b % 10))
+
+
+class Multiply2(OperationType):
+
+    MAX = 99
+
+    def __init__(self):
+        OperationType.__init__(self, "Multiply")
+        self._a = 0
+        self._b = 0
+
+    def get_one(self):
+        a = randint(0, self.MAX)
+        b = randint(0, self.MAX)
+
+        while a > 99 and b > 99:
+            a = randint(0, self.MAX)
+            b = randint(0, self.MAX)
 
         self._a = a
         self._b = b
@@ -125,7 +156,7 @@ class Square(OperationType):
 class Generator(object):
 
     def __init__(self):
-        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply(), Multiply(), Multiply(), Multiply()]
+        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), Multiply2(), Multiply1()]
 
     def get_one(self):
         problem = choice(self._type_lst)
@@ -157,6 +188,7 @@ class Generator(object):
             problem.wrong()
 
     def start(self, N):
+        OperationType.time_save = time()
         for i in range(N):
             self.get_one()
 
