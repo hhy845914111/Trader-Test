@@ -1,6 +1,7 @@
 from random import randint, choice
 from time import time
 from num2words import num2words
+import pyttsx3
 
 
 class OperationType(object):
@@ -47,7 +48,7 @@ class Plus(OperationType):
         b = randint(0, Plus.MAX) / 100
 
         self.timer()
-        return num2words(a) + " + " + num2words(b), a + b
+        return num2words(a) + " plus " + num2words(b), a + b
 
 
 class Minus(OperationType):
@@ -62,7 +63,7 @@ class Minus(OperationType):
         b = randint(0, Minus.MAX) / 100
 
         self.timer()
-        return num2words(a) + " - " + num2words(b), a - b
+        return num2words(a) + " minus " + num2words(b), a - b
 
 
 class Multiply1(OperationType):
@@ -86,7 +87,7 @@ class Multiply1(OperationType):
         self._b = b
 
         self.timer()
-        return num2words(a) + " * " + num2words(b), a * b
+        return num2words(a) + " times " + num2words(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -116,7 +117,7 @@ class Multiply2(OperationType):
         self._b = b
 
         self.timer()
-        return num2words(a) + " * " + num2words(b), a * b
+        return num2words(a) + " times " + num2words(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -137,7 +138,7 @@ class Divide(OperationType):
         b = randint(0, Divide.MAX)
 
         self.timer()
-        return num2words(a * b) + " / " + num2words(b), a
+        return num2words(a * b) + " divided by " + num2words(b), a
 
 
 class Square(OperationType):
@@ -151,10 +152,12 @@ class Square(OperationType):
         a = randint(0, Square.MAX)
 
         self.timer()
-        return str(a) + "^2 ", a**2
+        return str(a) + " square ", a**2
 
 
 class Generator(object):
+
+    VOICE_ENGINE = pyttsx3.init()
 
     def __init__(self):
         self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), Multiply2(), Multiply1()]
@@ -163,6 +166,9 @@ class Generator(object):
         problem = choice(self._type_lst)
         prob, answer = problem.get_one()
         print(prob)
+        self.VOICE_ENGINE.say(prob)
+        self.VOICE_ENGINE.runAndWait()
+
         right = True
         while True:
             tt = input()
@@ -193,6 +199,7 @@ class Generator(object):
         OperationType.time_save = time()
         for i in range(N):
             self.get_one()
+            print("\n")
 
         for it in self._type_lst:
             print(it.get_summary())
