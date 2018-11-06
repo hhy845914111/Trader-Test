@@ -1,7 +1,6 @@
 from random import randint, choice
 from time import time
 from num2words import num2words
-import pyttsx3
 
 
 class OperationType(object):
@@ -157,8 +156,6 @@ class Square(OperationType):
 
 class Generator(object):
 
-    VOICE_ENGINE = pyttsx3.init()
-
     def __init__(self):
         self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), Multiply2(), Multiply1()]
 
@@ -166,8 +163,6 @@ class Generator(object):
         problem = choice(self._type_lst)
         prob, answer = problem.get_one()
         print(prob)
-        self.VOICE_ENGINE.say(prob)
-        self.VOICE_ENGINE.runAndWait()
 
         right = True
         while True:
