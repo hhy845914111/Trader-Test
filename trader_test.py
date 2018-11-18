@@ -43,11 +43,58 @@ class Plus(OperationType):
         OperationType.__init__(self, "Plus")
 
     def get_one(self):
-        a = randint(0, Plus.MAX) / 100
-        b = randint(0, Plus.MAX) / 100
+        a = randint(0, self.MAX) / 100
+        b = randint(0, self.MAX) / 100
 
         self.timer()
         return num2words(a) + " plus " + num2words(b), a + b
+
+
+class FracMultiply(OperationType):
+
+    MAX = 20
+
+    def __init__(self):
+        OperationType.__init__(self, "FracMultiply")
+
+    def get_one(self):
+        a = randint(0, self.MAX)
+        b = randint(0, self.MAX)
+        c = randint(0, self.MAX)
+        d = randint(0, self.MAX)
+
+        while not c:
+            c = randint(0, self.MAX)
+
+        while not d:
+            d = randint(0, self.MAX)
+
+        return num2words(a) + " over " + num2words(b) + " times " + num2words(c) + " over " + num2words(d), a / b * (c / d)
+
+
+class FracDivide(OperationType):
+
+    MAX = 20
+
+    def __init__(self):
+        OperationType.__init__(self, "FracDivide")
+
+    def get_one(self):
+        a = randint(0, self.MAX)
+        b = randint(0, self.MAX)
+        c = randint(0, self.MAX)
+        d = randint(0, self.MAX)
+
+        while not c:
+            c = randint(0, self.MAX)
+
+        while not d:
+            d = randint(0, self.MAX)
+
+        while not b:
+            b = randint(0, self.MAX)
+
+        return num2words(a) + " over " + num2words(b) + " divided by " + num2words(c) + " over " + num2words(d), a / b / (c / d)
 
 
 class Minus(OperationType):
@@ -157,7 +204,7 @@ class Square(OperationType):
 class Generator(object):
 
     def __init__(self):
-        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), Multiply2(), Multiply1()]
+        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), FracDivide(), FracMultiply()]
 
     def get_one(self):
         problem = choice(self._type_lst)
@@ -178,7 +225,7 @@ class Generator(object):
                 right = False
 
             try:
-                if abs(float(tt) - answer) < 1e-5:
+                if abs(eval(tt) - answer) < 1e-5:
                     print(str(problem.timer()) + "s")
                     break
             except ValueError:
