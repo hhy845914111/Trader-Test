@@ -1,6 +1,7 @@
 from random import randint, choice
 from time import time
 from num2words import num2words
+from math import sqrt
 
 
 class OperationType(object):
@@ -195,16 +196,30 @@ class Square(OperationType):
         OperationType.__init__(self, "Square")
 
     def get_one(self):
-        a = randint(0, Square.MAX)
+        a = randint(0, self.MAX)
 
         self.timer()
         return str(a) + " square ", a**2
 
 
+class SquareRoot(OperationType):
+    
+    MAX = 999
+
+    def __init__(self):
+        OperationType.__init__(self, "Squre Root")
+
+    def get_one(self):
+        a = randint(0, self.MAX)
+
+        self.timer
+        return "square root of " + str(a), sqrt(a)
+
+
 class Generator(object):
 
     def __init__(self):
-        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), FracDivide(), FracMultiply()]
+        self._type_lst = [Plus(), Minus(), Divide(), Square(), Multiply2(), FracDivide(), FracMultiply(), SquareRoot(), SquareRoot(), SquareRoot(), SquareRoot()]
 
     def get_one(self):
         problem = choice(self._type_lst)
