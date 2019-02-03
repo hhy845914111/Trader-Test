@@ -1,6 +1,5 @@
 from random import randint, choice
 from time import time
-from num2words import num2words
 from math import sqrt
 
 
@@ -48,7 +47,7 @@ class Plus(OperationType):
         b = randint(0, self.MAX) / 100
 
         self.timer()
-        return num2words(a) + " plus " + num2words(b), a + b
+        return str(a) + " + " + str(b)
 
 
 class FracMultiply(OperationType):
@@ -70,7 +69,7 @@ class FracMultiply(OperationType):
         while not d:
             d = randint(0, self.MAX)
 
-        return num2words(a) + " over " + num2words(b) + " times " + num2words(c) + " over " + num2words(d), a / b * (c / d)
+        return str(a) + " / " + str(b) + " * " + str(c) + " / " + str(d), a / b * (c / d)
 
 
 class FracDivide(OperationType):
@@ -95,7 +94,7 @@ class FracDivide(OperationType):
         while not b:
             b = randint(0, self.MAX)
 
-        return num2words(a) + " over " + num2words(b) + " divided by " + num2words(c) + " over " + num2words(d), a / b / (c / d)
+        return str(a) + " / " + str(b) + " / (" + str(c) + " / " + str(d) + ")", a / b / (c / d)
 
 
 class Minus(OperationType):
@@ -110,7 +109,7 @@ class Minus(OperationType):
         b = randint(0, Minus.MAX) / 100
 
         self.timer()
-        return num2words(a) + " minus " + num2words(b), a - b
+        return str(a) + " - " + str(b), a - b
 
 
 class Multiply1(OperationType):
@@ -134,7 +133,7 @@ class Multiply1(OperationType):
         self._b = b
 
         self.timer()
-        return num2words(a) + " times " + num2words(b), a * b
+        return str(a) + " * " + str(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -164,7 +163,7 @@ class Multiply2(OperationType):
         self._b = b
 
         self.timer()
-        return num2words(a) + " times " + num2words(b), a * b
+        return str(a) + " * " + str(b), a * b
 
     def helper(self):
         if self._a <= 99:
@@ -185,7 +184,7 @@ class Divide(OperationType):
         b = randint(0, Divide.MAX)
 
         self.timer()
-        return num2words(a * b) + " divided by " + num2words(b), a
+        return str(a * b) + " / " + str(b), a
 
 
 class Square(OperationType):
@@ -199,7 +198,7 @@ class Square(OperationType):
         a = randint(0, self.MAX)
 
         self.timer()
-        return str(a) + " square ", a**2
+        return str(a) + "^2", a**2
 
 
 class SquareRoot(OperationType):
@@ -213,7 +212,7 @@ class SquareRoot(OperationType):
         a = randint(0, self.MAX)
 
         self.timer
-        return "square root of " + str(a), sqrt(a)
+        return "sqrt " + str(a), sqrt(a)
 
 
 class Generator(object):
